@@ -1,0 +1,155 @@
+dB browser for sqllite - standard installer for 64 bits Windows
+
+Primera parte del codigo
+
+Import random as rd
+Import sys
+Import datetime
+Import sqllite3
+From sqllite3 import Error
+From datetime import (date, 
+datetime, 
+timedelta)
+Import openpyx1
+
+Def Crear_tabla ():
+Try:
+Edith sqllite3.connect("coworking.db") as conn:
+Mi_cursor = conn.cursor()
+Mi_cursor.execute("CREATE TABLE IG NOT EXISTS Usuarios (clave_usuario INTEGER PRIMARY KEY, nombre TEXT (50) NOT NULL);")
+Mi cursor.execute("CREATE TABLE IF NOT EXISTS SALAS (clave_sala INTEGER PRIMARY KEY, nombre TEXT (50) NOT NULL, capacidad INTEGER NOT NULL);")
+Mi cursor.execute("CREATE TABLE IF NOT EXISTS Reservaciones(folio INTEGER PRIMARY KEY, nombre TEXT (50) NOT NULL, horario TEXT (20) NOT NULL, Fecha TIMESTAMP) ")
+print("tablas han sido creadas exitosamente")
+Except Error as e:
+Print (e)
+Except:
+Print(f"Se produjo el siguiente error:{sys.exc_info()[0]}")
+Finally:
+Conn.close()
+
+Crear_tabla ()
+
+#opcion 1
+Def Registrar_Reservacion ():
+While True:
+Valor_clave = int (input("cuál es su clave de cliente"))
+Try:
+With sqllite3.connect("coworking.db") as conn:
+Mi_cursor = conn.cursor()
+Valores = {"clave:valores_clave"}
+Mi_cursor.execute("SELECT * FROM Usuarios WHERE clave =: clave ", valores)
+Registro = mi_cursor.fetchall()
+
+If registro:
+For clave, nombre, in registro:
+Print (f"{clave}\t{nombre}")
+Else:
+Print(f"No se encontró ningún proyecto asociado con la clave{valor_clave}")
+Except Error as e:
+Print (e)
+Except:
+Print(f"Se produjo el siguiente error:{sys.exc_info()[0]}")
+Else:
+Nombre = input("Ingresa el nombre de la reservación(Escribe Salir para regresar al menu)")
+If Nombre =='':
+Continue
+Elif nombre =='Salir':
+Return
+Else:
+Horario = input ("¿Cuál es el horario que deseas?[Matutino,Vespertino,Nocturno]: ")
+Print (Horario)
+Fecha_Ingresada = input ("Ingresa la fecha de reservación:")
+Fecha_dt = datetime.strptime(Fecha_Ingresada, '%d/%m/%Y')
+Fecha_actual = datetime.today()
+Fecha_permitida = datetime.now() + timedelta( days=2)
+If fecha_dt < fecha_permitida:
+Print("Debes hacer la reservación con 2 días de anticipacion")
+Else:
+Nivel = rd.randint (1,99)
+Try:
+With sqllite3.connect("coworking.db") as conn: 
+Mi_cursor = conn.cursor()
+Misala= {"folio":nivel,"nombre":Nombre,"horario":Horario,"fecha":fecha_dt}
+Mi_cursor.execute("")
+Print("El folio es: ")
+Print("nivel")
+Print("El nombre es: ")
+Print(nombre)
+Except error as e:
+Print (e)
+Except:
+Print(f"Se produjo el siguiente error:{sys.exc_info()[0]}")
+Finally:
+If (conn):
+Con.close()
+Fecha_consultar = input ("Confirma la fecha (dd/mm/aaaa):")
+Fecha_consultar = datetime.strptime(fecha_consultar, "%d/%m/%Y").date()
+Print ("¡Reservación realizada con éxito!")
+Try:
+With sqllite3.connect("coworking.db",detect_types = sqllite3.PARSE_DECLTYPES|sqllite3.PARSE_COLNAMES) as conn:
+mi_cursor = conn.cursor()
+Criterios = {"fecha":fecha_consultar}
+Mi_cursor.execute("SELECT folio,nombre,horario, fecha FROM Reservaciones WHERE DATE(fecha) = (:fecha);",criterios)
+Registros = Mi_cursor.fectchall()
+
+For clave,nombre,fecha_registro,fecha in registros:
+Print(f"Clave = {clave},tipo de dato {type(clave)}")
+Print(f"Nombre = {nombre},tipo de dato {type(nombre)}")
+Print(f"Horario = {fecha_registro},tipo de dato {type(fecha_registro)}")
+Print(f"Clave = {fecha},tipo de dato {type(fecha)}")
+For clave,nombre,fecha_registro,fecha in registros:
+Print("Clave\t" + "Nombre\t" + "Turno\t" + "Fecha\t")
+Print(f"{clave}\t + {nombre}\t  {fecha_registro}\t + {fecha}\t")
+Return
+Except sqllite3.Error as e:
+Print (e)
+Except exception:
+Print(f"Se produjo el siguiente error:{sys.exc_info()[0]}")
+Finally:
+If(conn):
+Conn.close()
+Print("Se ha cerrado la conexión")
+Def modificar_descrupciones():
+While True:
+Llave= input('Cual el nombre de tu reservación?')
+Try:
+With sqllite3.connect('coworking.db') as conn:
+Mi_cursor= conn.cursor()
+Valores= {'nombre: ':llave}
+Mi_cursor.execute('SELECT * FROM Reservaciones WHERE nombre =: nombre' , valores)
+Registro= Mi_curso.fetchall()
+
+If registro:
+For folio, nombre, horario, fecha in registro:
+Print("Clave\t" + "Nombre\t" + "Turno\t")
+Print(f"{folio}\t + {nombre}\t  {horario}\t + {fecha}\t")
+
+Else:
+Print(f"No se encontró un proyecto asociado con la clave {llave}")
+Except Error as e:
+Print (e)
+Except:
+Print("Se produjo el siguiente error:{sys.exc_info()[0]}")
+Else:
+Nuevo_nombre = input(f"A qué nombre lo quieres cambiar?: ")
+Id_number = folio
+Turno = horario
+Fecha_dt = fecha
+Try:
+With sqllite3.connect("coworking.db") as conn:
+Mi_cursor = con.cursor()
+Sydney = {"folio:":id_number, "nombre":nombre, "":nombre}
+Mi_cursor.execute("UPDATE Reservaciones SET nombre = (:nombre) WHERE (:folio):", sydney)
+Print("Modificación realizada con exito")
+Modificar_descripciones():
+Return
+Except error as e:
+Print (e)
+Except:
+Print(f"Surgió una falla siendo está la causa: {sys.exc_info()[0]}")")
+
+#Opcion 3
+
+Def consultar_fecha():
+Fecha_consultar = input("Dime una fecha (dd/mm/aaaa): ")
+Fecha_consultar = datetime
